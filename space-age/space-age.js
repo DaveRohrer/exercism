@@ -23,4 +23,3 @@ export const age = (planet, seconds) => {
   // Return converted rate after rounding to two decimals places (and converting back to a number)
   return parseFloat((convertedYears / conversions.get(planet)).toFixed(2));
 };
-implemented 
