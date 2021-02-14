@@ -10,7 +10,7 @@ export const age = (planet, seconds) => {
   const convertedYears = seconds / 31557600;
 
   // Set up conversion rates
-  let conversions = new Map;
+  const conversions = new Map;
   conversions.set('mercury', 0.2408467);
   conversions.set('venus', 0.61519726);
   conversions.set('earth', 1);
@@ -23,3 +23,4 @@ export const age = (planet, seconds) => {
   // Return converted rate after rounding to two decimals places (and converting back to a number)
   return parseFloat((convertedYears / conversions.get(planet)).toFixed(2));
 };
+implemented 

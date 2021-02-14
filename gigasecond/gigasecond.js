@@ -5,6 +5,6 @@
 
 export const gigasecond = (moment) => {
   const manySecondsLater = new Date(moment);
-  manySecondsLater.setTime(manySecondsLater.getTime()+1000000000000);
+  manySecondsLater.setTime(manySecondsLater.getTime() + 1.0e12);
   return manySecondsLater;
 };
