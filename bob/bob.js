@@ -5,8 +5,7 @@
 
 export const hey = (message) => {
 
-  // Default response is 'Whatever.'
-  let response = 'Whatever.'
+  let response;
 
   if (isQuestion(message)) {
     if (isYelling(message)) {
@@ -21,6 +20,9 @@ export const hey = (message) => {
   }
   else if (isWhiteSpaceOnly(message)) {
     response = 'Fine. Be that way!';
+  }
+  else {
+    response = 'Whatever.';
   }
 
   return response;
