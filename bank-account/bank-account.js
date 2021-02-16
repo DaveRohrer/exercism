@@ -14,7 +14,7 @@ export class BankAccount {
       this._open = true;
     }
     else {
-      throw new ValueError;
+      throw new ValueError();
     }
   }
 
@@ -24,7 +24,7 @@ export class BankAccount {
       this._open = false;
     }
     else {
-      throw new ValueError;
+      throw new ValueError();
     }
   }
 
@@ -33,7 +33,7 @@ export class BankAccount {
       this._balance += amount;
     }
     else {
-      throw new ValueError;
+      throw new ValueError();
     }
   }
 
@@ -42,7 +42,7 @@ export class BankAccount {
       this._balance -= amount;;
     }
     else {
-      throw new ValueError;
+      throw new ValueError();
     }
   }
 
@@ -51,7 +51,7 @@ export class BankAccount {
       return this._balance;
     }
     else {
-      throw new ValueError;
+      throw new ValueError();
     }
   }
 

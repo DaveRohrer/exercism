@@ -36,9 +36,9 @@ const isQuestion = (message) => {
 
 const isYelling = (message) => {
   // If the message contains some letters at all check to see if any are lower case and return the result
-  return (new RegExp(/[A-Z]/i).test(message)) ? !(new RegExp(/[a-z]/).test(message)) : false;
+  return (/[A-Z]/i.test(message)) ? !(/[a-z]/.test(message)) : false;
 }
 
 const isWhiteSpaceOnly = (message) => {
-  return !(new RegExp(/[^\s]/).test(message));
+  return !(/[^\s]/.test(message));
 }
