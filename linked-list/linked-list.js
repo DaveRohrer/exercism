@@ -4,38 +4,28 @@
 //
 
 const createNode = (value, next, prev) => {
-  return { value: value, next: next, prev: prev };
+  return { value, next, prev };
 }
 
 export class LinkedList {
   constructor() {
     this._head = null;
     this._tail = null;
+    this._iterator = null;
   }
   push(value) {
-    // if empty
-    if (!this._tail) {
-      // create one node and set links appropriately
-      this._tail = createNode(value, null, null)
-      this._head = this._tail;
-    }
-    // if our list has one node only
-    else if (!this._tail.prev) {
-      // create another node and set links appropriately
-      const newTail = createNode(value, null, this._head);
-      this._head.next = newTail;
-      this._tail = newTail;
-    }
-    // if our list has at least 2 nodes
-    else {
-      const newTail = createNode(value, null, this._tail);
-      newTail.prev.next = newTail;
-      this._tail = newTail;
+
+    if (this.listIsEmpty()) {
+      this._pushIntoEmptyList(value);
+    } else if (this.listHasOneElement()) {
+      this._pushIntoSingleElementList(value);
+    } else {
+      this._pushIntoMultiElementList(value);
     }
   }
 
   pop() {
-    if (!this._tail) {
+    if (this.listIsEmpty()) {
       return null;
     }
     else {
@@ -43,9 +33,7 @@ export class LinkedList {
       this._tail = this._tail.prev;
       if (this._tail) {
         this._tail.next = null;
-      }
-      else {
-        // relink our head and tail when empty
+      } else {
         this._head = this._tail;
       }
       return returnNode.value;
@@ -53,7 +41,7 @@ export class LinkedList {
   }
 
   shift() {
-    if (!this._head) {
+    if (this.listIsEmpty()) {
       return null;
     }
     else {
@@ -61,89 +49,126 @@ export class LinkedList {
       this._head = this._head.next;
       if (this._head) {
         this._head.prev = null;
-      }
-      else {
-        // relink our head and tail when empty
+      } else {
         this._tail = this._head;
       }
-
       return returnNode.value;
     }
   }
 
   unshift(value) {
-    if (!this._head) {
-      this._head = createNode(value, null, null);
-      this._tail = this._head;
-    }
-    else if (!this._head.next) {
-      const newHead = createNode(value, this._head, null);
-      this._tail.prev = newHead;
-      this._head = newHead;
-    }
-    else {
-      const newHead = createNode(value, this._head, null);
-      newHead.next.prev = newHead;
-      this._head = newHead;
+    if (this.listIsEmpty()) {
+      this._unshiftIntoEmptyList(value);
+    } else if (this.listHasOneElement()) {
+      this._unshiftIntoSingleElementList(value);
+    } else {
+      this._unshiftIntoMultiElementList(value);
     }
   }
 
   delete(value) {
-    if (!this._head) {
+    if (this.listIsEmpty() || !this._moveIteratorToValue(value)) {
       return null;
     }
-    else {
-      let iterator = this._head;
-
-      while (iterator) {
-        if (iterator.value === value) {
-          if (!iterator.prev) { // if deleteing the head
-            if (!iterator.next) { //means the head is also the tail
-              this._head = null;
-              this._tail = this._head;
-              break;
-            }
-            else {
-              //delete the head and link everything up correctly
-              iterator.next.prev = null;
-              this._head = iterator.next;
-              iterator = null;
-              break;
-            }
-          } else if (!iterator.next) { //deleting the last item in the list (and there are at least 2 items in list)
-            //delete tail and link everything up correctly.
-            iterator.prev.next = null;
-            this._tail = iterator.prev;
-            console.log(iterator);
-            console.log(this._head);
-            console.log(this._tail);
-
-          } else { //deleting any middle node between head and tail
-            iterator.prev.next = iterator.next;
-            iterator.next.prev = iterator.prev;
-          }
-
-          break;
-        }
-        else {
-          iterator = iterator.next;
-        }
+    if (!this._iterator.prev) {
+      if (!this._iterator.next) {
+        this._deleteHeadFromSingleElementList();
+      } else {
+        this._deleteHeadFromMultiElementList();
       }
+    } else if (!this._iterator.next) {
+      this._deleteTailFromMultiElementList();
+    } else {
+      this._deleteNonEndNodeFromMultiElementList();
     }
   }
 
   count() {
-    if (!this._head) {
+    if (this.listIsEmpty()) {
       return 0;
     }
     else {
       let count = 0;
-      let nodeIterator = this._head;
-      while (nodeIterator) {
+      this._resetIterator();
+      while (this._iterator) {
         count++;
-        nodeIterator = nodeIterator.next;
+        this._iterator = this._iterator.next;
       }
       return count;
     }
   }
+
+  _moveIteratorToValue(value) {
+    this._iterator = this._head
+    while (this._iterator) {
+      if (this._iterator.value === value) {
+        break;
+      } else {
+        this._iterator = this._iterator.next;
+      }
+    }
+    return this._iterator;
+  }
+
+  _deleteHeadFromSingleElementList() {
+    this._head = null;
+    this._tail = this._head;
+  }
+  _deleteHeadFromMultiElementList() {
+    this._iterator.next.prev = null;
+    this._head = this._iterator.next;
+  }
+
+  _deleteTailFromMultiElementList() {
+    this._iterator.prev.next = null;
+    this._tail = this._iterator.prev;
+  }
+
+  _deleteNonEndNodeFromMultiElementList() {
+    this._iterator.prev.next = this._iterator.next;
+    this._iterator.next.prev = this._iterator.prev;
+  }
+
+  _resetIterator() {
+    this._iterator = this._head;
+  }
+
+  listIsEmpty() {
+    return !this._head;
+  }
+
+  listHasOneElement() {
+    return !this._head;
+  }
+
+  _pushIntoEmptyList(value) {
+    this._tail = createNode(value, null, null)
+    this._head = this._tail;
+  }
+  _pushIntoSingleElementList(value) {
+    const newTail = createNode(value, null, this._head);
+    this._head.next = newTail;
+    this._tail = newTail;
+  }
+  _pushIntoMultiElementList(value) {
+    const newTail = createNode(value, null, this._tail);
+    newTail.prev.next = newTail;
+    this._tail = newTail;
+  }
+
+  _unshiftIntoEmptyList(value) {
+    this._head = createNode(value, null, null);
+    this._tail = this._head;
+  }
+  _unshiftIntoSingleElementList(value) {
+    const newHead = createNode(value, this._head, null);
+    this._tail.prev = newHead;
+    this._head = newHead;
+  }
+  _unshiftIntoMultiElementList(value) {
+    const newHead = createNode(value, this._head, null);
+    newHead.next.prev = newHead;
+    this._head = newHead;
+  }
+
 }
