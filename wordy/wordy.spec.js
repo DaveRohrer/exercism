@@ -5,6 +5,12 @@ describe('Wordy', () => {
     expect(answer('What is 5?')).toEqual(5);
   });
 
+  test('just a number but with a mistyped number', () => {
+    expect(() => answer('What is h5?')).toThrow(
+      new Error('Syntax error')
+    );
+  });
+
   xtest('addition', () => {
     expect(answer('What is 1 plus 1?')).toEqual(2);
   });
@@ -67,7 +73,7 @@ describe('Wordy', () => {
     );
   });
 
-  xtest('Non math question', () => {
+  test('Non math question', () => {
     expect(() => answer('Who is the President of the United States?')).toThrow(
       new Error('Unknown operation')
     );
