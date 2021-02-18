@@ -3,58 +3,44 @@
 // convenience to get you started writing code faster.
 //
 
+// Hope you weren't lying about wanting to see more maps....
 export class Cipher {
+  #key
   constructor(key) {
     if (!key) {
-      this._key = this.getRandomKey(100);
+      this.#key = this.getRandomKey(100);
     } else {
-      this._key = key;
+      this.#key = key;
     }
   }
 
   encode(message) {
-    let encodedMessage = '';
-    for (let i = 0; i < message.length; i++) {
-      encodedMessage = encodedMessage.concat(this.encodeCharacter(message, i));
-    }
-    return encodedMessage;
+    return [...message].map((char, index) => { return this.encodeCharacter(char, index); }, this).join('');
   }
 
   decode(message) {
-    let decodedMessage = '';
-    for (let i = 0; i < message.length; i++) {
-      decodedMessage = decodedMessage.concat(this.decodeCharacter(message, i));
-    }
-    return decodedMessage;
+    return [...message].map((char, index) => { return this.decodeCharacter(char, index); }, this).join('');
   }
 
   get key() {
-    return this._key;
+    return this.#key;
   }
 
-  encodeCharacter(string, index) {
-    let charCode = ((string.charCodeAt(index) - 97 + (this._key.charCodeAt(index % this._key.length) - 97)));
-    charCode = charCode % 26;
-    return String.fromCharCode(charCode + 97);
-  }
+  // The ascii values of a-z are sequential and start at 97.
+  // The mod operators are to loop around from the front to back/back to front
 
-  decodeCharacter(string, index) {
-    let charCode = (((string.charCodeAt(index) - 97) - (this._key.charCodeAt(index % this._key.length) - 97)));
-    if (charCode < 0) {
-      charCode += 26
-    }
-    return String.fromCharCode(charCode + 97);
+  encodeCharacter(char, index) {
+    return String.fromCharCode(((char.charCodeAt() - 97 + this.#key.charCodeAt(index % this.#key.length) - 97) % 26) + 97);
+  };
+
+  decodeCharacter(char, index) {
+    return String.fromCharCode((((char.charCodeAt() - 97) - (this.#key.charCodeAt(index % this.#key.length) - 97) + 26) % 26) + 97);
   }
 
   getRandomKey(keyLength) {
-    let randomKey = '';
-    for (let i = 0; i < keyLength; i++) {
-      randomKey = randomKey.concat(String.fromCharCode(randNum(26) + 97));
-    }
-    return randomKey;
-  }
+    return Array(keyLength).fill('').map((x) => { return String.fromCharCode(randNum(26) + 97); }).join('')
+  };
 }
-
 function randNum(max) {
   return Math.floor(Math.random() * Math.floor(max));
 }
