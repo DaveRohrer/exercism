@@ -3,8 +3,10 @@
 // convenience to get you started writing code faster.
 //
 export class GradeSchool {
+  #studentDB;
+
   constructor() {
-    this._studentDB = new Map(); // look and them parens baby!
+    this.#studentDB = new Map(); // look and them parens baby!
   }
 
   roster() {
@@ -12,20 +14,20 @@ export class GradeSchool {
     for (const grade of this._gatherGradesFromDataBase()) {
       roster[grade] = [];
     }
-    for (const student of this._studentDB) {
-      roster[`${student[1].grade}`].push(student[0]);
+    for (const [studentName, studentInfo] of this.#studentDB) {
+      roster[`${studentInfo.grade}`].push(studentName);
     }
 
     return this._alphabetizeRoster(roster);
   }
 
   add(name, grade) {
-    this._studentDB.set(name, { grade: grade });
+    this.#studentDB.set(name, { grade });
   }
 
   grade(grade) {
-    let gradeRoster = [];
-    for (let student of this._studentDB) {
+    const gradeRoster = [];
+    for (let student of this.#studentDB) {
       if (student[1].grade === grade) {
         gradeRoster.push(student[0]);
       }
@@ -47,7 +49,7 @@ export class GradeSchool {
 
   _gatherGradesFromDataBase() {
     const grades = [];
-    for (const student of this._studentDB) {
+    for (const student of this.#studentDB) {
       if (!grades.includes(student[1].grade)) {
         grades.push(student[1].grade);
       }
