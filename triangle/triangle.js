@@ -4,19 +4,30 @@
 //
 
 export class Triangle {
+  #sides
   constructor(...sides) {
-    throw new Error('Remove this statement and implement this function');
+    this.#sides = sides.sort();
   }
 
   get isEquilateral() {
-    throw new Error('Remove this statement and implement this function');
+    return this.#sides.every(x => x > 0 && x == this.#sides[0]);
   }
 
   get isIsosceles() {
-    throw new Error('Remove this statement and implement this function');
+    return this.#sides.map((x) => {
+      return this.#sides.filter(side => side === x).length
+    }, this).filter(x => x >= 2).length >= 2 &&
+      this.#sides[0] + this.#sides[1] >= this.#sides[2];
   }
 
   get isScalene() {
-    throw new Error('Remove this statement and implement this function');
+    return this.#sides.map((x) => {
+      return this.#sides.filter(side => side === x).length
+    }, this).filter(x => x === 1).length === 3 &&
+      this.#sides[0] + this.#sides[1] >= this.#sides[2];
+  }
+
+  get isDegenerate() {
+    return Number.parseFloat(this.#sides[0] + this.#sides[1]).toPrecision(1) == this.#sides[2];
   }
 }
