@@ -13,6 +13,7 @@ export const commands = (code) => {
     "Reverse order",
   ];
   if ((code & 16) > 0) {
+    // Reversed flag was set
     code -= 16;
     return handshakeEvents.filter((x, index) => { return (1 << index & code) > 0 }).reverse();
   } else {
