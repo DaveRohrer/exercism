@@ -27,9 +27,9 @@ export class GradeSchool {
 
   grade(grade) {
     const gradeRoster = [];
-    for (let student of this.#studentDB) {
-      if (student[1].grade === grade) {
-        gradeRoster.push(student[0]);
+    for (let [studentName, studentInfo] of this.#studentDB) {
+      if (studentInfo.grade === grade) {
+        gradeRoster.push(studentName);
       }
     }
     gradeRoster.sort()
@@ -49,9 +49,9 @@ export class GradeSchool {
 
   _gatherGradesFromDataBase() {
     const grades = [];
-    for (const student of this.#studentDB) {
-      if (!grades.includes(student[1].grade)) {
-        grades.push(student[1].grade);
+    for (const [studentName, studentInfo] of this.#studentDB) {
+      if (!grades.includes(studentInfo.grade)) {
+        grades.push(studentInfo.grade);
       }
     }
     this._orderGrades(grades);
