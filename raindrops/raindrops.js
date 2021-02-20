@@ -3,6 +3,21 @@
 // convenience to get you started writing code faster.
 //
 
-export const convert = () => {
-  throw new Error('Remove this statement and implement this function');
+// feels like the stupidest program ever. may be a better way to do it but i couldnt
+// really even take it seriously. sorry for the wasted time.
+export const convert = (number) => {
+  let sound = '';
+  if (number % 3 === 0) {
+    sound += 'Pling';
+  }
+  if (number % 5 === 0) {
+    sound += 'Plang';
+  }
+  if (number % 7 === 0) {
+    sound += 'Plong';
+  }
+  if (!sound.length) {
+    return `${number}`;
+  }
+  return sound;
 };
