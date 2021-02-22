@@ -3,6 +3,7 @@ const foodItems = {
     displayName: "Wheat Bread",
     container: "Bag",
     defaultWeeksUntilExpiration: 4,
+    almostEmptyThreshold: 0.2,
     defaultStorageLocation: "Refridgerator",
   },
   peanutButter: {
