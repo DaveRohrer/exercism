@@ -57,7 +57,6 @@ const updateToWhatPercentMenu = `Please enter the percent of food remaining in t
      . [Back]Back to Previous Screen
      . [Exit]Exit
     `;
-
 const processRootInput = (input) => {
   /// add functions as parameters to the ones that require DB checking
   switch (input) {
