@@ -12,7 +12,7 @@ const {
   updateContainerLevelMenu,
   processUpdateContainerLevelInput,
   registerRootMenuWithUpdateMenu,
-} = require("./update-container.js");
+} = require("./update.js");
 
 const rootMenu = `What would you like to do?
     1. [P]Pull Food

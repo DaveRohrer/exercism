@@ -51,15 +51,21 @@ class FoodItem {
   get weeksUntilExpirationAfterPullingToRefrigerator() {
     return this.#weeksUntilExpirationAfterPullingToRefrigerator;
   }
-  get logString() {
+  get displayString() {
     return (
-      "Output: " +
+      "\nFood Item Name: " +
       this.name +
+      "\nContainer: " +
       this.containerType +
+      "\nAbbreviation: " +
       this.abbreviation +
+      "\nAlmost Empty Threshold: " +
       this.almostEmptyThreshhold +
+      "\nDefault Weeks Until Expiration: " +
       this.defaultWeeksUntilExpiration +
+      "\nDefault Storage Location: " +
       this.defaultStorageLocation +
+      "\nWeeks Until Expiration After Entering Fridge: " +
       this.weeksUntilExpirationAfterPullingToRefrigerator
     );
   }
