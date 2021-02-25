@@ -9,6 +9,7 @@ class Inventory {
   constructor(inventory) {
     this.#inventory = inventory;
   }
+  // TODO: Should be able to delete this eventually.
   get inventory() {
     return this.#inventory;
   }
@@ -55,14 +56,6 @@ class Inventory {
         return element.location === location && element.type === containerType;
       })
     ].volume = newVolume;
-  }
-
-  //consider moving these two functions to a different class... maybe a household class that has inventories and foodlist
-  withinValidDepositRange(amountToDeposit) {
-    return amountToDeposit > 0 && amountToDeposit < 51;
-  }
-  withinValidVolumeRange(containerVolumeLevel) {
-    return containerVolumeLevel >= 0 && containerVolumeLevel <= 1;
   }
 }
 

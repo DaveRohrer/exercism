@@ -6,7 +6,7 @@ const {
   rootMenu,
   processRootInput,
   rootMenuInitialize,
-} = require("./menu/root.js");
+} = require("./menu/old_root.js");
 
 const Inventory = require("./modules/Inventory");
 const FoodList = require("./modules/FoodList");
@@ -15,6 +15,7 @@ const showCurrentMenu = () => {
   console.log(menuHandler.currentMenu);
 };
 
+//rf basically
 // this function actually just reads data into one big string
 const readFile = async (filename) => {
   return new Promise((resolve, reject) => {
@@ -27,7 +28,7 @@ const readFile = async (filename) => {
     });
   });
 };
-
+//rf basically
 const getLocationFromChar = (char) => {
   switch (char) {
     case "f":
@@ -123,7 +124,7 @@ const validContainerPercent = (floatString) => {
     return false;
   }
 };
-
+//*** */
 const getRequiredInputValidator = (path) => {
   if (path.match(/p,[fdc],[fdr],\w+/)) {
     return validAmountOfContainersInLocation;
@@ -139,6 +140,7 @@ const getRequiredInputValidator = (path) => {
     return validContainerInLocation;
   }
 };
+//rf
 const Locations = {
   f: "Frezer",
   d: "Deep Freezer",
@@ -220,12 +222,14 @@ const updateContainer = (containerLocation, abbreviation, newVolume) => {
   ].volume = newVolume;
 };
 
+//*** */
 const reset = () => {
   userNavigationPath = [];
 };
 
+//*** */
 const performCommand = (menuPath) => {
-  if (menuPath.match(/p,[fdc],[fdr],\w+,\d+/)) {
+  if (menuPath.match(/p,[fdc],[fdr],\w+,\d+/)) {  //^[p1],[fdc123],[fdr123],\w+,\d+$
     pullContainer(
       menuPath.split(",")[1],
       menuPath.split(",")[2],
@@ -250,12 +254,13 @@ const performCommand = (menuPath) => {
   }
 };
 
+//*** */
 // Point the menu handler at the next menu chosen by the user.
 const updateMenuState = (userResponse) => {
   menuHandler.currentMenu = userResponse.nextMenu;
   menuHandler.processInput = userResponse.nextInputProcessor;
 };
-
+//*** */
 // Function we call when the user types "exit"
 const shutdown = () => {
   console.log("exit time");
@@ -263,7 +268,7 @@ const shutdown = () => {
   console.log(userNavigationPath);
   process.exit(0);
 };
-
+//*** */
 // Function that is called whenever the user presses enter. Clean up so it reads a bit
 // better.
 const onEnter = (input) => {
@@ -286,7 +291,7 @@ const onEnter = (input) => {
   }
   showCurrentMenu();
 };
-
+//*** */
 // This sets up a terminal line for the user to type into and defines
 // the function to be called when the user presses enter.
 const initializeInterface = () => {
@@ -299,7 +304,7 @@ const initializeInterface = () => {
     onEnter(`${input}`.toLowerCase());
   });
 };
-
+//*** */
 // Takes line text array from the FoodItem csv file and
 // returns an array of FoodItem class objects
 const parseFoodItemLineData = (data) => {
@@ -316,7 +321,7 @@ const parseFoodItemLineData = (data) => {
       return new FoodItem(...item);
     });
 };
-
+//*** */
 // Takes line text array from the inventory csv file and
 // returns an array of ContainerOfFood class objects
 const parseContainerOfFoodLineData = (data) => {
