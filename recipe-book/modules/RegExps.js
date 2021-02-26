@@ -9,13 +9,15 @@ const baseRequestRegExps = [
   /^[u],[fdrc]$/,
 ];
 
-//these require logic
-//  /^[p],[fdc],[fdr],\w+$/,
-//  /^[p],[fdc],[fdr],\w+,\d+$/,
-//  /^[d],[fdrc],\w+$/,
-//  /^[d],[fdrc],\w+,\d+$/,
-//  /^[u],[fdrc],\w+$/,
-//  /^[u],[fdrc],\w+,((.\d+)|(\d+.\d+))$/,
+/*
+these require logic to esure \w+ and \d+ are valid when considering loaded data
+ /^[p],[fdc],[fdr],\w+$/,
+ /^[p],[fdc],[fdr],\w+,\d+$/,
+ /^[d],[fdrc],\w+$/,
+ /^[d],[fdrc],\w+,\d+$/,
+ /^[u],[fdrc],\w+$/,
+ /^[u],[fdrc],\w+,((.\d+)|(\d+.\d+)|(\d+))$/,
+ */
 
 /*
 menu regexs

@@ -40,6 +40,11 @@ class Inventory {
         );
       });
       this.#inventory[indexToMove].location = newLocation;
+      //TODO remove this line once you fix methods that call this function
+      //to actually provide the correct expiration date.
+      if (newExpirationDate === -1) {
+        newExpirationDate = this.#inventory[indexToMove].expirationDate;
+      }
       this.#inventory[indexToMove].expirationDate = newExpirationDate;
     }
   }

@@ -15,9 +15,14 @@ class FoodList {
   }
 
   getFoodNameFromAbbreviation(abbreviation) {
-    return this.#foodList.find(
+    const foodItem = this.#foodList.find(
       (element) => element.abbreviation === abbreviation
-    ).name;
+    );
+    return foodItem ? foodItem.name : "Invalid Food Item";
+  }
+  getDefaultExpirationWeeksFromName(name) {
+    return this.#foodList.find((element) => element.name === name)
+      .defaultWeeksUntilExpiration;
   }
   getDefaultExpirationWeeksFromAbbreviation(abbreviation) {
     return this.#foodList.find(

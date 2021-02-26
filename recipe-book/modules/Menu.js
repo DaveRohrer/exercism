@@ -22,7 +22,7 @@ class Menu {
   }
   setMenuScreen(inputString) {
     this.#currentMenu = this.#menu.findIndex((element) => {
-      console.log(element.regexp);
+      // console.log(element.regexp);
       return element.regexp.test(inputString);
     });
   }

@@ -5,6 +5,7 @@ What would you like to do?
   [D]Deposit Food
   [U]Update Container Level
   [G]Manage Grocery List
+  [Back]Back
   [Exit]Exit
   `,
   regexp: /^$/,
