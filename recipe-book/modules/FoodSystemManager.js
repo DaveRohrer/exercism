@@ -187,6 +187,7 @@ class FoodSystemManager {
     return containerVolumeLevel >= 0 && containerVolumeLevel < containerLevel;
   }
   createExpirationDate(foodName) {
+    createExpirationDate(foodName) {
     return new Date(
       Date.now() +
         this.#foodList.getDefaultExpirationWeeksFromName(foodName) * 6.048e8

@@ -39,8 +39,12 @@ class ContainerOfFood {
   set expirationDate(expirationDate) {
     this.#expirationDate = expirationDate;
   }
-  set volume(newVolume) {
-    this.#volume = newVolume;
+  reduceVolume(amount) {
+    const isValid = amount < this.#volume;
+    if (isValid) {
+      this.#volume = amount;
+    }
+    return { success: isValid, newValue: this.#volume };
   }
 }
 

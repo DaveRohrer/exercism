@@ -60,7 +60,7 @@ class Inventory {
       this.#inventory.findIndex((element) => {
         return element.location === location && element.type === containerType;
       })
-    ].volume = newVolume;
+    ].reduceVolume(newVolume);
   }
 }
 
