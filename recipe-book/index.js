@@ -48,16 +48,16 @@ const exit = () => {
   fsm.printInventory();
   process.exit(0);
 };
-const initializeApp = () => {
-  loadFoodListFromCSVFile("data/foodItems.csv").then((foodList) => {
-    loadInventoryFromCSVFile("data/inventory.csv").then((inventory) => {
-      fsm = new FoodSystemManager(foodList, inventory);
-      menu = new Menu();
-      menu.show();
-      initializeTerminalInterface(onEnter);
-      cm = new CommandBuilder();
-    });
-  });
+const initializeApp = async () => {
+  try {
+    const foodList = await loadFoodListFromCSVFile("data/foodItems.csv");
+    const inventory = await loadInventoryFromCSVFile("data/inventory.csv");
+    fsm = new FoodSystemManager(foodList, inventory);
+    menu = new Menu();
+    menu.show();
+    initializeTerminalInterface(onEnter);
+    cm = new CommandBuilder();
+  } catch (e) {}
 };
 
 // app varaibles
