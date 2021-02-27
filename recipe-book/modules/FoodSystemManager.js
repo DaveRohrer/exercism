@@ -155,7 +155,12 @@ class FoodSystemManager {
     }
     if (!requisiteRequestReturnValue.isValid) {
       return requisiteRequestReturnValue;
-    } else if (this.withinValidVolumeRange(requestedAmount)) {
+    } else if (
+      this.withinValidVolumeRange(
+        requestedAmount,
+        this.getContainer(requestedLocation, requestedType).volume
+      )
+    ) {
       this.#inventory.updateContainerVolume(
         requestedLocation,
         requestedType,
@@ -178,14 +183,19 @@ class FoodSystemManager {
   withinValidDepositRange(amountToDeposit) {
     return amountToDeposit > 0 && amountToDeposit < 51;
   }
-  withinValidVolumeRange(containerVolumeLevel) {
-    return containerVolumeLevel >= 0 && containerVolumeLevel <= 1;
+  withinValidVolumeRange(containerVolumeLevel, containerLevel) {
+    return containerVolumeLevel >= 0 && containerVolumeLevel < containerLevel;
   }
   createExpirationDate(foodName) {
     return new Date(
       Date.now() +
         this.#foodList.getDefaultExpirationWeeksFromName(foodName) * 6.048e8
     );
+  }
+  getContainer(location, type) {
+    return this.#inventory.inventory.find((element) => {
+      return element.location == location && element.type == type;
+    });
   }
 }
 
