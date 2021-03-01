@@ -105,7 +105,7 @@ const drawBoardState = (boardState, selectorPosition) => {
   console.log(boardStateDisplayString);
 };
 
-let selectorCharacterIndex = 0;
+let selectorCharacterIndex;
 
 const updateSelectorCharacterIndex = () => {
   selectorCharacterIndex++;
@@ -118,8 +118,14 @@ const resetSelectorCharacter = () => {
   selectorCharacterIndex = 0;
 };
 
+const initializeView = () => {
+  resetSelectorCharacter();
+  console.clear();
+};
+
 module.exports = {
   drawBoardState,
   updateSelectorCharacterIndex,
   resetSelectorCharacter,
+  initializeView,
 };
