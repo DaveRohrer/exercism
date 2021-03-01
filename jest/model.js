@@ -107,7 +107,7 @@ const checkForWinner = () => {
       boardState[1][1] === boardState[2][2]) ||
       (boardState[2][0] === boardState[1][1] &&
         boardState[1][1] === boardState[0][2])) &&
-    boardState[2][2] !== "blank"
+    boardState[1][1] !== "blank"
   ) {
     return boardState[1][1];
   }

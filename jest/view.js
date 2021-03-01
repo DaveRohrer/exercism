@@ -1,3 +1,4 @@
+const readline = require("readline");
 const {
   board,
   letters,
@@ -120,7 +121,6 @@ const resetSelectorCharacter = () => {
 };
 
 const updateView = (boardState, selectorPosition, topMessage) => {
-  console.clear();
   let boardStateDisplayString = board;
   boardStateDisplayString = insertBoardState(
     boardState,
@@ -131,6 +131,12 @@ const updateView = (boardState, selectorPosition, topMessage) => {
     boardStateDisplayString,
     selectorPosition
   );
+
+  // Put our cursor to the top so we overwrite our board everyframe without
+  // having to clear the console (and cause flickering) Howerver, we do need
+  // to clear the top line message so we dont get artifacts when it changes.
+  readline.cursorTo(process.stdout, 0, 0);
+  process.stdout.clearLine(0);
 
   console.log(insertTopMessage(boardStateDisplayString, topMessage));
 };
