@@ -100,16 +100,12 @@ const insertBoardState = (boardState, boardStateDisplayString) => {
   return boardStateDisplayString;
 };
 
-const insertPlayerTurnMessage = (
-  boardStateDisplayString,
-  playersTurnMessage
-) => {
-  playersTurnMessage = playersTurnMessage.padStart(
-    playersTurnMessage.length +
-      (boardPixelWidth - playersTurnMessage.length) / 2,
+const insertTopMessage = (boardStateDisplayString, topMessage) => {
+  topMessage = topMessage.padStart(
+    topMessage.length + (boardPixelWidth - topMessage.length) / 2,
     " "
   );
-  return (playersTurnMessage + "\n").concat(boardStateDisplayString);
+  return (topMessage + "\n").concat(boardStateDisplayString);
 };
 
 const updateSelectorCharacterIndex = () => {
@@ -123,7 +119,7 @@ const resetSelectorCharacter = () => {
   selectorCharacterIndex = 0;
 };
 
-const updateView = (boardState, selectorPosition, playersTurnMessage) => {
+const updateView = (boardState, selectorPosition, topMessage) => {
   console.clear();
   let boardStateDisplayString = board;
   boardStateDisplayString = insertBoardState(
@@ -135,9 +131,8 @@ const updateView = (boardState, selectorPosition, playersTurnMessage) => {
     boardStateDisplayString,
     selectorPosition
   );
-  console.log(
-    insertPlayerTurnMessage(boardStateDisplayString, playersTurnMessage)
-  );
+
+  console.log(insertTopMessage(boardStateDisplayString, topMessage));
 };
 
 const initializeView = () => {
