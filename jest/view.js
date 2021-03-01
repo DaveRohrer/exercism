@@ -1,7 +1,8 @@
 const {
   board,
-  //   x,
+  // x,
   //   o,
+  letters,
   boardPixelWidth,
   letterPixelWidth,
   letterPixelHeight,
@@ -84,11 +85,23 @@ const insertSelectBoarder = (board, selectPosition, selectColor = " ") => {
 };
 
 const drawBoardState = (boardState) => {
+  let boardStateDisplayString = board;
   for (let i = 0; i < 3; i++) {
     for (let j = 0; j < 3; j++) {
       //insertLetter(board);
+      if (boardState[i][j] != "blank") {
+        boardStateDisplayString = insertLetter(
+          boardStateDisplayString,
+          { x: j, y: i },
+          letters[boardState[i][j]]
+        );
+      } else {
+        //console.log("blankytime");
+        //console.log(letters.x);
+      }
     }
   }
+  console.log(boardStateDisplayString);
 };
 
 // let temp = insertLetter(board, { x: 1, y: 1 }, x);

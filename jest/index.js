@@ -14,9 +14,9 @@ process.stdin.on("keypress", (str, key) => {
 });
 
 const boardState = [
-  ["blank", "blank", "blank"],
-  ["blank", "blank", "blank"],
-  ["blank", "blank", "blank"],
+  ["x", "o", "blank"],
+  ["blank", "blank", "x"],
+  ["blank", "o", "blank"],
 ];
 const selectorPosition = { x: 0, y: 0 };
 
