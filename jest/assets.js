@@ -57,7 +57,6 @@ module.exports = {
   board,
   letters,
   boardPixelWidth,
-  boardPixelHeight,
   letterPixelWidth,
   letterPixelHeight,
   gridPixelThickness,

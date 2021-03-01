@@ -9,6 +9,34 @@ let selectorPosition = {};
 let selectorTicTimeout;
 let playersTurn;
 
+const initializeModel = () => {
+  boardState = [
+    ["blank", "blank", "blank"],
+    ["blank", "blank", "blank"],
+    ["blank", "blank", "blank"],
+  ];
+  selectorPosition.x = 0;
+  selectorPosition.y = 0;
+  selectorTicTimeout = setSelectorInterval();
+  playersTurn = "X";
+
+  updateView(boardState, selectorPosition, topMessage(playersTurn));
+};
+
+const resetModel = () => {
+  boardState = [
+    ["blank", "blank", "blank"],
+    ["blank", "blank", "blank"],
+    ["blank", "blank", "blank"],
+  ];
+  selectorPosition.x = 0;
+  selectorPosition.y = 0;
+  resetSelectorFlash();
+  playersTurn = "X";
+
+  updateView(boardState, selectorPosition, topMessage(playersTurn));
+};
+
 const selectorTic = () => {
   updateSelectorCharacterIndex();
   updateView(boardState, selectorPosition, topMessage(playersTurn));
@@ -43,24 +71,14 @@ const moveSelector = (desiredDirection) => {
     default:
       break;
   }
-  clearInterval(selectorTicTimeout);
-  selectorTicTimeout = setSelectorInterval();
-  resetSelectorCharacter();
+  resetSelectorFlash();
   updateView(boardState, selectorPosition, topMessage(playersTurn));
 };
 
-const initializeModel = () => {
-  boardState = [
-    ["blank", "blank", "blank"],
-    ["blank", "blank", "blank"],
-    ["blank", "blank", "blank"],
-  ];
-  selectorPosition.x = 0;
-  selectorPosition.y = 0;
+const resetSelectorFlash = () => {
+  clearInterval(selectorTicTimeout);
   selectorTicTimeout = setSelectorInterval();
-  playersTurn = "X";
-
-  updateView(boardState, selectorPosition, topMessage(playersTurn));
+  resetSelectorCharacter();
 };
 
 const placeLetter = () => {
@@ -134,4 +152,4 @@ const topMessage = (playersTurn) => {
   }
 };
 
-module.exports = { moveSelector, initializeModel, placeLetter };
+module.exports = { moveSelector, initializeModel, placeLetter, resetModel };

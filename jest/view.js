@@ -3,7 +3,6 @@ const {
   board,
   letters,
   boardPixelWidth,
-  boardPixelHeight,
   letterPixelWidth,
   letterPixelHeight,
   gridPixelThickness,
@@ -137,8 +136,15 @@ const updateView = (boardState, selectorPosition, topMessage) => {
   // to clear the top line message so we dont get artifacts when it changes.
   readline.cursorTo(process.stdout, 0, 0);
   process.stdout.clearLine(0);
+  boardStateDisplayString = insertTopMessage(
+    boardStateDisplayString,
+    topMessage
+  );
+  console.log(insertBottomMenu(boardStateDisplayString));
+};
 
-  console.log(insertTopMessage(boardStateDisplayString, topMessage));
+const insertBottomMenu = (boardStateDisplayString) => {
+  return boardStateDisplayString.concat(`\n  [R] Restart         [ESC] Quit  `);
 };
 
 const initializeView = () => {
