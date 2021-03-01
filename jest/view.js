@@ -85,6 +85,7 @@ const insertSelectBoarder = (board, selectorPosition) => {
 };
 
 const drawBoardState = (boardState, selectorPosition) => {
+  //diffClear();
   console.clear();
   let boardStateDisplayString = board;
   for (let i = 0; i < 3; i++) {
@@ -111,12 +112,25 @@ let selectorCharacterIndex = 0;
 const updateSelectorCharacterIndex = () => {
   selectorCharacterIndex++;
   if (selectorCharacterIndex >= numberOfSelectorChars) {
-    selectorCharacterIndex = 0;
+    resetSelectorCharacter();
   }
 };
+
+const resetSelectorCharacter = () => {
+  selectorCharacterIndex = 0;
+};
+
+const diffClear = () => {
+  //TODO IMPLEMENT A CLEARNER CLEAR THAT ONLY RESETS WHAT NEEDS TO BE!!!!!!! MAYBE A DIFFERENT PRINT FUNCTION!!!
+};
+
 // let temp = insertLetter(board, { x: 1, y: 1 }, x);
 // temp = insertLetter(temp, { x: 0, y: 2 }, o);
 // temp = insertSelectBoarder(temp, { x: 0, y: 2 });
 // console.log(temp);
 
-module.exports = { drawBoardState, updateSelectorCharacterIndex };
+module.exports = {
+  drawBoardState,
+  updateSelectorCharacterIndex,
+  resetSelectorCharacter,
+};
