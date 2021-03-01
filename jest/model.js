@@ -1,5 +1,5 @@
 const {
-  drawBoardState,
+  updateView,
   updateSelectorCharacterIndex,
   resetSelectorCharacter,
 } = require("./view");
@@ -7,10 +7,11 @@ const {
 let boardState = [];
 let selectorPosition = {};
 let selectorTicTimeout;
+let playersTurn;
 
 const selectorTic = () => {
   updateSelectorCharacterIndex();
-  drawBoardState(boardState, selectorPosition);
+  updateView(boardState, selectorPosition, playersTurnMessage(playersTurn));
 };
 
 const setSelectorInterval = () => {
@@ -45,7 +46,7 @@ const moveSelector = (desiredDirection) => {
   clearInterval(selectorTicTimeout);
   selectorTicTimeout = setSelectorInterval();
   resetSelectorCharacter();
-  drawBoardState(boardState, selectorPosition);
+  updateView(boardState, selectorPosition, playersTurnMessage(playersTurn)); //TODO change to update view
 };
 
 const initializeModel = () => {
@@ -57,8 +58,13 @@ const initializeModel = () => {
   selectorPosition.x = 0;
   selectorPosition.y = 0;
   selectorTicTimeout = setSelectorInterval();
+  playersTurn = "X";
 
-  drawBoardState(boardState, selectorPosition);
+  updateView(boardState, selectorPosition, playersTurnMessage(playersTurn));
+};
+
+const playersTurnMessage = (playersTurn) => {
+  return `Player ${playersTurn}'s Turn`;
 };
 
 module.exports = { moveSelector, initializeModel };

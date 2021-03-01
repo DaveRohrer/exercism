@@ -13,6 +13,8 @@ const {
   numberOfSelectorChars,
 } = require("./assets");
 
+let selectorCharacterIndex;
+
 const getLetterDrawingOffsets = (boardPosition) => {
   const yOffset = getDrawingOffset(
     boardPosition.y,
@@ -55,8 +57,8 @@ getSelectorDrawingOffsets = (boardPosition) => {
   return { x: xOffset, y: yOffset };
 };
 
-const insertLetter = (board, drawPosition, letter) => {
-  let boardPixels = [...board];
+const insertLetter = (boardStateDisplayString, drawPosition, letter) => {
+  let boardPixels = [...boardStateDisplayString];
   const cleanedLetter = letter.match(/[^\n]/g);
 
   for (let i = 0; i < letterPixelWidth * letterPixelHeight; i++) {
@@ -69,8 +71,8 @@ const insertLetter = (board, drawPosition, letter) => {
   return boardPixels.join("");
 };
 
-const insertSelectBoarder = (board, selectorPosition) => {
-  let boardPixels = [...board];
+const insertSelectBoarder = (boardStateDisplayString, selectorPosition) => {
+  let boardPixels = [...boardStateDisplayString];
   for (let i = 0; i < selectorPixelWidth * selectorPixelHeight; i++) {
     const offsets = getSelectorDrawingOffsets(selectorPosition);
     const iIndex = Math.trunc(i / selectorPixelWidth);
@@ -83,9 +85,7 @@ const insertSelectBoarder = (board, selectorPosition) => {
   return boardPixels.join("");
 };
 
-const drawBoardState = (boardState, selectorPosition) => {
-  console.clear();
-  let boardStateDisplayString = board;
+const insertBoardState = (boardState, boardStateDisplayString) => {
   for (let i = 0; i < 3; i++) {
     for (let j = 0; j < 3; j++) {
       if (boardState[i][j] != "blank") {
@@ -97,15 +97,20 @@ const drawBoardState = (boardState, selectorPosition) => {
       }
     }
   }
-  boardStateDisplayString = insertSelectBoarder(
-    boardStateDisplayString,
-    selectorPosition,
-    selectorCharacterIndex
-  );
-  console.log(boardStateDisplayString);
+  return boardStateDisplayString;
 };
 
-let selectorCharacterIndex;
+const insertPlayerTurnMessage = (
+  boardStateDisplayString,
+  playersTurnMessage
+) => {
+  playersTurnMessage = playersTurnMessage.padStart(
+    playersTurnMessage.length +
+      (boardPixelWidth - playersTurnMessage.length) / 2,
+    " "
+  );
+  return (playersTurnMessage + "\n").concat(boardStateDisplayString);
+};
 
 const updateSelectorCharacterIndex = () => {
   selectorCharacterIndex++;
@@ -118,13 +123,31 @@ const resetSelectorCharacter = () => {
   selectorCharacterIndex = 0;
 };
 
+const updateView = (boardState, selectorPosition, playersTurnMessage) => {
+  console.clear();
+  let boardStateDisplayString = board;
+  boardStateDisplayString = insertBoardState(
+    boardState,
+    boardStateDisplayString,
+    selectorPosition
+  );
+  boardStateDisplayString = insertSelectBoarder(
+    boardStateDisplayString,
+    selectorPosition
+  );
+  //insertPlayerTurnMessage(boardStateDisplayString, playersTurnMessage)
+  console.log(
+    insertPlayerTurnMessage(boardStateDisplayString, playersTurnMessage)
+  );
+};
+
 const initializeView = () => {
   resetSelectorCharacter();
   console.clear();
 };
 
 module.exports = {
-  drawBoardState,
+  updateView,
   updateSelectorCharacterIndex,
   resetSelectorCharacter,
   initializeView,
