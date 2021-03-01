@@ -114,10 +114,24 @@ const checkForWinner = () => {
   return "no winner";
 };
 
+const hasOpenSpace = () => {
+  return (
+    boardState[0].includes("blank") ||
+    boardState[1].includes("blank") ||
+    boardState[2].includes("blank")
+  );
+};
+
 const topMessage = (playersTurn) => {
-  return checkForWinner() === "no winner"
-    ? `Player ${playersTurn}'s Turn`
-    : `Player ${checkForWinner().toUpperCase()} Wins!`;
+  if (checkForWinner() === "no winner") {
+    if (!hasOpenSpace()) {
+      return `Draw Game!`;
+    } else {
+      return `Player ${playersTurn}'s Turn`;
+    }
+  } else {
+    return `Player ${checkForWinner().toUpperCase()} Wins!`;
+  }
 };
 
 module.exports = { moveSelector, initializeModel, placeLetter };
