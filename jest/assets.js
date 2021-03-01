@@ -54,7 +54,7 @@ const letters = {
 ╚█████╔╝
 ░╚════╝░`,
 };
-const selectorChars = ["░", " "];
+const selectorChars = ["▒", " "];
 
 const boardPixelWidth = board.substr(0, board.indexOf("\n") + 1).length; //We do want to preserve new lines here
 const boardPixelHeight = board.match(/\n/g).length + 1;

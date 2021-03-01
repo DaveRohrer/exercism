@@ -70,43 +70,53 @@ const insertLetter = (board, drawPosition, letter) => {
   return boardPixels.join("");
 };
 
-const insertSelectBoarder = (board, selectPosition, selectColor = " ") => {
+const insertSelectBoarder = (board, selectorPosition) => {
   let boardPixels = [...board];
   for (let i = 0; i < selectorPixelWidth * selectorPixelHeight; i++) {
-    const offsets = getSelectorDrawingOffsets(selectPosition);
+    const offsets = getSelectorDrawingOffsets(selectorPosition);
     const iIndex = Math.trunc(i / selectorPixelWidth);
     const jIndex = i % selectorPixelWidth;
     const currBoardIndex =
       (iIndex + offsets.y) * boardPixelWidth + (jIndex + offsets.x);
     if (boardPixels[currBoardIndex] === "░")
-      boardPixels[currBoardIndex] = selectColor;
+      boardPixels[currBoardIndex] = selectorChars[selectorCharacterIndex];
   }
   return boardPixels.join("");
 };
 
-const drawBoardState = (boardState) => {
+const drawBoardState = (boardState, selectorPosition) => {
+  console.clear();
   let boardStateDisplayString = board;
   for (let i = 0; i < 3; i++) {
     for (let j = 0; j < 3; j++) {
-      //insertLetter(board);
       if (boardState[i][j] != "blank") {
         boardStateDisplayString = insertLetter(
           boardStateDisplayString,
           { x: j, y: i },
           letters[boardState[i][j]]
         );
-      } else {
-        //console.log("blankytime");
-        //console.log(letters.x);
       }
     }
   }
+  boardStateDisplayString = insertSelectBoarder(
+    boardStateDisplayString,
+    selectorPosition,
+    selectorCharacterIndex
+  );
   console.log(boardStateDisplayString);
 };
 
+let selectorCharacterIndex = 0;
+
+const updateSelectorCharacterIndex = () => {
+  selectorCharacterIndex++;
+  if (selectorCharacterIndex >= numberOfSelectorChars) {
+    selectorCharacterIndex = 0;
+  }
+};
 // let temp = insertLetter(board, { x: 1, y: 1 }, x);
 // temp = insertLetter(temp, { x: 0, y: 2 }, o);
 // temp = insertSelectBoarder(temp, { x: 0, y: 2 });
 // console.log(temp);
 
-module.exports = drawBoardState;
+module.exports = { drawBoardState, updateSelectorCharacterIndex };
