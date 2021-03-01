@@ -4,37 +4,44 @@ const {
   resetSelectorCharacter,
 } = require("./view");
 
+// Model variables
 let boardState = [];
 let selectorPosition = {};
 let selectorTicTimeout;
 let playersTurn;
 
+// Model init function
 const initializeModel = () => {
-  boardState = [
-    ["blank", "blank", "blank"],
-    ["blank", "blank", "blank"],
-    ["blank", "blank", "blank"],
-  ];
-  selectorPosition.x = 0;
-  selectorPosition.y = 0;
+  resetBoardState();
+  resetSelectorPosition();
   selectorTicTimeout = setSelectorInterval();
   playersTurn = "X";
-
   updateView(boardState, selectorPosition, topMessage(playersTurn));
 };
 
+// Resetting methods
 const resetModel = () => {
+  resetBoardState();
+  resetSelectorPosition();
+  resetSelectorBlink();
+  playersTurn = "X";
+  updateView(boardState, selectorPosition, topMessage(playersTurn));
+};
+const resetSelectorPosition = () => {
+  selectorPosition.x = 0;
+  selectorPosition.y = 0;
+};
+const resetBoardState = () => {
   boardState = [
     ["blank", "blank", "blank"],
     ["blank", "blank", "blank"],
     ["blank", "blank", "blank"],
   ];
-  selectorPosition.x = 0;
-  selectorPosition.y = 0;
-  resetSelectorFlash();
-  playersTurn = "X";
-
-  updateView(boardState, selectorPosition, topMessage(playersTurn));
+};
+const resetSelectorBlink = () => {
+  clearInterval(selectorTicTimeout);
+  selectorTicTimeout = setSelectorInterval();
+  resetSelectorCharacter();
 };
 
 const selectorTic = () => {
@@ -71,14 +78,8 @@ const moveSelector = (desiredDirection) => {
     default:
       break;
   }
-  resetSelectorFlash();
+  resetSelectorBlink();
   updateView(boardState, selectorPosition, topMessage(playersTurn));
-};
-
-const resetSelectorFlash = () => {
-  clearInterval(selectorTicTimeout);
-  selectorTicTimeout = setSelectorInterval();
-  resetSelectorCharacter();
 };
 
 const placeLetter = () => {
@@ -102,6 +103,14 @@ const flipTurn = () => {
   } else {
     playersTurn = "X";
   }
+};
+
+const hasOpenSpace = () => {
+  return (
+    boardState[0].includes("blank") ||
+    boardState[1].includes("blank") ||
+    boardState[2].includes("blank")
+  );
 };
 
 const checkForWinner = () => {
@@ -132,14 +141,7 @@ const checkForWinner = () => {
   return "no winner";
 };
 
-const hasOpenSpace = () => {
-  return (
-    boardState[0].includes("blank") ||
-    boardState[1].includes("blank") ||
-    boardState[2].includes("blank")
-  );
-};
-
+// This method returns whatever message should be displayed above the board
 const topMessage = (playersTurn) => {
   if (checkForWinner() === "no winner") {
     if (!hasOpenSpace()) {

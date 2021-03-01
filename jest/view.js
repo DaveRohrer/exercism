@@ -13,8 +13,17 @@ const {
   numberOfSelectorChars,
 } = require("./assets");
 
+// View varaibles
 let selectorCharacterIndex;
 
+// View initialize method
+const initializeView = () => {
+  resetSelectorCharacter();
+  console.clear();
+};
+
+// Offset methods. These methods calculate how much padding is required before drawing
+// a letter or select indicator at a particular location.
 const getLetterDrawingOffsets = (boardPosition) => {
   const yOffset = getDrawingOffset(
     boardPosition.y,
@@ -57,6 +66,8 @@ getSelectorDrawingOffsets = (boardPosition) => {
   return { x: xOffset, y: yOffset };
 };
 
+// Insert functions. These functions insert specific strings (such as the ascii art letters,
+// select indicator, and top/bottom messages into the larger board display string.
 const insertLetter = (boardStateDisplayString, drawPosition, letter) => {
   let boardPixels = [...boardStateDisplayString];
   const cleanedLetter = letter.match(/[^\n]/g);
@@ -108,17 +119,24 @@ const insertTopMessage = (boardStateDisplayString, topMessage) => {
   return (topMessage + "\n").concat(boardStateDisplayString);
 };
 
+const insertBottomMenu = (boardStateDisplayString) => {
+  return boardStateDisplayString.concat(`\n  [R] Restart         [ESC] Quit  `);
+};
+
+// Select indicator functions to allow blinking
 const updateSelectorCharacterIndex = () => {
   selectorCharacterIndex++;
   if (selectorCharacterIndex >= numberOfSelectorChars) {
     resetSelectorCharacter();
   }
 };
-
 const resetSelectorCharacter = () => {
   selectorCharacterIndex = 0;
 };
 
+// This is our main draw function. It starts with the blank board ascii art and inserts
+// the necessary letters, selector, and messages. It also clears necessary elements we
+// previously printed to the terminal and overwrites everything else.
 const updateView = (boardState, selectorPosition, topMessage) => {
   let boardStateDisplayString = board;
   boardStateDisplayString = insertBoardState(
@@ -141,15 +159,6 @@ const updateView = (boardState, selectorPosition, topMessage) => {
     topMessage
   );
   console.log(insertBottomMenu(boardStateDisplayString));
-};
-
-const insertBottomMenu = (boardStateDisplayString) => {
-  return boardStateDisplayString.concat(`\n  [R] Restart         [ESC] Quit  `);
-};
-
-const initializeView = () => {
-  resetSelectorCharacter();
-  console.clear();
 };
 
 module.exports = {
