@@ -135,7 +135,6 @@ const updateView = (boardState, selectorPosition, playersTurnMessage) => {
     boardStateDisplayString,
     selectorPosition
   );
-  //insertPlayerTurnMessage(boardStateDisplayString, playersTurnMessage)
   console.log(
     insertPlayerTurnMessage(boardStateDisplayString, playersTurnMessage)
   );

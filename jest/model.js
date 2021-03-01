@@ -46,14 +46,14 @@ const moveSelector = (desiredDirection) => {
   clearInterval(selectorTicTimeout);
   selectorTicTimeout = setSelectorInterval();
   resetSelectorCharacter();
-  updateView(boardState, selectorPosition, playersTurnMessage(playersTurn)); //TODO change to update view
+  updateView(boardState, selectorPosition, playersTurnMessage(playersTurn));
 };
 
 const initializeModel = () => {
   boardState = [
-    ["x", "o", "blank"],
-    ["blank", "blank", "x"],
-    ["blank", "o", "blank"],
+    ["blank", "blank", "blank"],
+    ["blank", "blank", "blank"],
+    ["blank", "blank", "blank"],
   ];
   selectorPosition.x = 0;
   selectorPosition.y = 0;
@@ -63,8 +63,26 @@ const initializeModel = () => {
   updateView(boardState, selectorPosition, playersTurnMessage(playersTurn));
 };
 
+const placeLetter = () => {
+  if (boardState[selectorPosition.y][selectorPosition.x] === "blank") {
+    boardState[selectorPosition.y][
+      selectorPosition.x
+    ] = playersTurn.toLowerCase();
+    flipTurn();
+  }
+  updateView(boardState, selectorPosition, playersTurnMessage(playersTurn));
+};
+
+const flipTurn = () => {
+  if (playersTurn === "X") {
+    playersTurn = "O";
+  } else {
+    playersTurn = "X";
+  }
+};
+
 const playersTurnMessage = (playersTurn) => {
   return `Player ${playersTurn}'s Turn`;
 };
 
-module.exports = { moveSelector, initializeModel };
+module.exports = { moveSelector, initializeModel, placeLetter };
