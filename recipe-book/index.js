@@ -1,59 +1,68 @@
-const readline = require("readline");
-const questionPromise = require("./question-promise");
+const FoodSystemManager = require("./modules/FoodSystemManager");
+const Menu = require("./modules/Menu");
+const CommandBuilder = require("./modules/CommandBuilder");
+const loadFoodListFromCSVFile = require("./modules/FoodListLoader");
+const loadInventoryFromCSVFile = require("./modules/InventoryLoader");
+const initializeTerminalInterface = require("./modules/terminalInterface");
 
-(async function () {
-    const ingredients = {
-      bread: {
-        displayName: "Bread",
-      }
-    };
-
-    const recipes = {
-      peanutbutterSurprise: {
-        ingredients: [
-          {id: "bread", amount: 2}
-        ]
-      }
-    };
-
-    const selectedRecipes = [
-      "peanutbutterSurprise"
-    ];
-
-    const rl = readline.createInterface({
-        input: process.stdin,
-        output: process.stdout
-    });
-
-    console.log(`
-    1. Show List
-    2. Add to List
-    `);
-    const response = await questionPromise(rl, "What to do?");
-
-    switch (response) {
-        case "1": {
-            for (let i of selectedRecipes) {
-              for (let j of recipes[i].ingredients) {
-                const displayName = ingredients[j.id].displayName;
-                const amount = j.amount;
-                console.log(displayName + ": " + amount);
-              }
-            }
-        }
+//app functions
+const onEnter = (terminalInput) => {
+  cm.currentInput = terminalInput;
+  if (userWantsToExit()) {
+    exit();
+  } else if (userWantsToGoBack()) {
+    goBack();
+  } else {
+    processUserRequest();
+  }
+  updateSystemsAfterProcessingRequest();
+};
+const userWantsToExit = () => {
+  return cm.currentInput === "exit";
+};
+const userWantsToGoBack = () => {
+  return cm.currentInput === "back";
+};
+const goBack = () => {
+  cm.stepBackCurrentCommand();
+};
+const updateSystemsAfterProcessingRequest = () => {
+  //TODO Show user's partially built command if we want
+  console.log(cm.currentCommand);
+  menu.setMenuScreen(cm.currentCommand);
+  cm.resetCurrentInput();
+  menu.show();
+};
+const processUserRequest = () => {
+  const requestResult = fsm.processRequests(cm.fullUserRequestedCommand);
+  if (requestResult.isValid) {
+    if (requestResult.requestType === "Complete") {
+      cm.onCompleteCommand();
+    } else {
+      cm.addCurrentInputToCurrentCommand();
     }
+  }
+};
+const exit = () => {
+  console.log("exit time");
+  fsm.printInventory();
+  process.exit(0);
+};
+const initializeApp = async () => {
+  try {
+    const foodList = await loadFoodListFromCSVFile("data/foodItems.csv");
+    const inventory = await loadInventoryFromCSVFile("data/inventory.csv");
+    fsm = new FoodSystemManager(foodList, inventory);
+    menu = new Menu();
+    menu.show();
+    initializeTerminalInterface(onEnter);
+    cm = new CommandBuilder();
+  } catch (e) {}
+};
 
+// app varaibles
+let cm;
+let fsm;
+let menu;
 
-    rl.close();
-
-
-
-
-    
-
-    rl.on("close", function () {
-        console.log("\nBYE BYE !!!");
-        process.exit(0);
-    });
-
-})()
+initializeApp();
