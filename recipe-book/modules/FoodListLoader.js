@@ -3,13 +3,10 @@ const FoodItem = require("./FoodItem");
 const FoodList = require("./FoodList");
 
 const loadFoodListFromCSVFile = async (filepath) => {
+  const fileData = await getFileData(filepath);
+  const parsedData = await parseFoodListCSVData(fileData.split("\r\n"));
   return new Promise((resolve) => {
-    //
-    getFileData(filepath).then((foodListCSVData) => {
-      parseFoodListCSVData(foodListCSVData.split("\r\n")).then((foodList) => {
-        resolve(new FoodList(foodList));
-      });
-    });
+    resolve(new FoodList(parsedData));
   });
 };
 

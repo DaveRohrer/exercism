@@ -30,9 +30,9 @@ class FoodList {
     ).defaultWeeksUntilExpiration;
   }
   hasFoodWithAbbreviation(abbreviation) {
-    return this.#foodList.reduce((acc, element) => {
-      return element.abbreviation === abbreviation || acc;
-    }, false);
+    return this.#foodList.some((element) => {
+      return element.abbreviation === abbreviation;
+    });
   }
 }
 module.exports = FoodList;

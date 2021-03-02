@@ -3,20 +3,15 @@ const ContainerOfFood = require("./ContainerOfFood");
 const Inventory = require("./Inventory");
 
 const loadInventoryFromCSVFile = async (filepath) => {
-  return new Promise((resolve, reject) => {
-    //
-    getFileData(filepath).then((inventoryCSVData) => {
-      parseInventoryCSVData(inventoryCSVData.split("\r\n")).then(
-        (inventory) => {
-          resolve(new Inventory(inventory));
-        }
-      );
-    });
+  const fileData = await getFileData(filepath);
+  const parsedData = await parseInventoryCSVData(fileData.split("\r\n"));
+  return new Promise((resolve) => {
+    resolve(new Inventory(parsedData));
   });
 };
 
 // TODO consider error checking format
-const parseInventoryCSVData = async (data) => {
+const parseInventoryCSVData = (data) => {
   return new Promise((resolve) => {
     resolve(
       data
