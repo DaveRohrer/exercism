@@ -113,6 +113,7 @@ const hasOpenSpace = () => {
   );
 };
 
+//TODO make some smaller functions to call in here
 const checkForWinner = () => {
   for (let i = 0; i < 3; i++) {
     if (
