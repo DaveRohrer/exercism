@@ -155,4 +155,12 @@ const topMessage = (playersTurn) => {
   }
 };
 
-module.exports = { moveSelector, initializeModel, placeLetter, resetModel };
+module.exports = {
+  moveSelector,
+  initializeModel,
+  placeLetter,
+  resetModel,
+};
+// testing exports. I put them on a separate line until I learn more about how to properly
+// handle encapsulation when doing jest testing.
+//module.exports = { checkForWinner };

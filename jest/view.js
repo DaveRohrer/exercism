@@ -152,6 +152,10 @@ const updateView = (boardState, selectorPosition, topMessage) => {
   // Put our cursor to the top so we overwrite our board everyframe without
   // having to clear the console (and cause flickering) Howerver, we do need
   // to clear the top line message so we dont get artifacts when it changes.
+  // TODO: now that you learned how to use cursor placement to determine where
+  // stuff prints to the screen, you could consider rending the entire board
+  // system using cursor movement rather than successively inserting characters
+  // into a big string.
   readline.cursorTo(process.stdout, 0, 0);
   process.stdout.clearLine(0);
   boardStateDisplayString = insertTopMessage(
