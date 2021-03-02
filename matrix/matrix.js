@@ -1,7 +1,7 @@
 //
 // This is only a SKELETON file for the 'Matrix' exercise. It's been provided as a
 // convenience to get you started writing code faster.
-//
+//666
 
 import { split } from "core-js/modules/es.symbol.js"; //had to change this line to better reflect what was in my directory structure
 
@@ -12,21 +12,17 @@ export class Matrix {
     const rowsStrings = numberString.split('\n');
     // This will eventually store the numerical matrix.
     const rows = [];
-
     // For each string of row characters...
     rowsStrings.forEach(element => {
       // Split into an array of strings for each number
       const singleRowString = element.split(" ");
       // Prepare an array to hold the numberical values we just split
       const numericalRow = [];
-      
       singleRowString.forEach(element => {
         numericalRow.push(parseInt(element));
       })
-    
       rows.push(numericalRow);
     })
-
     this._rows = rows;
   }
 
@@ -47,9 +43,7 @@ export class Matrix {
         singleCol.push(this._rows[j][i]);
       }
       cols.push(singleCol);
-
     }
-
     return cols;
   }
 }
