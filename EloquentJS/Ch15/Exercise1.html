@@ -1,0 +1,33 @@
+<p>&#128516</p>
+
+<script>
+ 
+ let p = document.querySelector("p");
+  const setSize = (newSize) =>{
+   
+    p.style.fontSize = newSize + "px";
+  }
+	setSize(30);  
+  let scaler = 1;
+  
+  const onDown = (event) => {
+    if (event.key == "ArrowUp") {
+      scaler += .1
+      setSize(30*scaler);
+      event.preventDefault();
+    }
+      if (event.key == "ArrowDown") {
+      scaler -= .1
+      setSize(30*scaler);
+      event.preventDefault();
+    }
+      if(scaler > 2){
+        p.textContent = "X";
+         document.body.removeEventListener("keydown", onDown);
+    
+      }
+  };
+  // Your code here
+  
+    document.body.addEventListener("keydown", onDown);
+</script>

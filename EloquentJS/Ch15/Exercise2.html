@@ -1,0 +1,56 @@
+<style>
+  .trail {
+    /* className for the trail elements */
+    position: absolute;
+    height: 6px;
+    width: 6px;
+    border-radius: 3px;
+    background: teal;
+  }
+  body {
+    height: 300px;
+  }
+</style>
+
+<script>
+  // Your code here.
+
+  let i = 0;
+  let scheduled = null;
+  let trailElements = [];
+
+  window.addEventListener("mousemove", (event) => {
+    let scheduled = null;
+
+    if (i >= 100) {
+      i = 0;
+    }
+    trailElements[i].style.left = event.pageX + "px";
+    trailElements[i].style.top = event.pageY + "px";
+    scheduled = null;
+
+    scheduled = event;
+    i++;
+  });
+
+  let gravity = 1;
+  const animate = (currentTime, previousTime) => {
+    if (previousTime != null) {
+      //make gravity happen
+      gravity += (currentTime - previousTime) * 0.5;
+      trailElements.forEach((element) => (element.style.top += gravity + "px"));
+    }
+
+    requestAnimationFrame((newTime) => animate(newTime, currentTime));
+  };
+  requestAnimationFrame(animate);
+  // Your code here.
+  for (let i = 0; i < 100; i++) {
+    let trail = document.createElement("div");
+    trail.className = "trail";
+    trail.style.left = -100 + "px";
+    trail.style.top = -100 + "px";
+    document.body.appendChild(trail);
+    trailElements.push(trail);
+  }
+</script>
